@@ -1,47 +1,36 @@
-const Product = require('../models/admin.model');
+const Person = require('../models/admin.model');
 
 //Simple version, without validation or sanitation
 exports.test = function (req, res) {
-    res.send('Greetings from the Test controller!');
+    res.send('This is test controller!');
 };
 
-exports.product_create = function (req, res) {
-    let product = new Product(
+exports.admin_create = function (req, res) {
+    let person = new Person(
         {
-            name: req.body.name,
-            price: req.body.price
+            username: req.body.username,
+            password: req.body.password,            
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
         }
     );
 
-    product.save(function (err) {
+    person.save(function (err) {
         if (err) {
             console.log(err);
             return next(err);
         }
-        console.log(product.name);
-        res.send('Product Created successfully')
+        console.log(person.username);
+        res.send('Person Created successfully')
     })
 };
 
 
-exports.product_details = function (req, res) {
-    Product.find(function (err, product) 
+exports.admin_auth = function (req, res) {
+    Person.findOne({username: req.body.username,password:req.body.password},function (err, person) 
     {
-        if (err) return next(err);
-        res.send(product);
-    })
-};
-
-exports.product_update = function (req, res) {
-    Product.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, product) {
-        if (err) return next(err);
-        res.send('Product udpated.');
-    });
-};
-
-exports.product_delete = function (req, res) {
-    Product.findByIdAndRemove(req.params.id, function (err) {
-        if (err) return next(err);
-        res.send('Deleted successfully!');
+        if (err) {console.log(err);  return next(err);}
+        console.log(person);
+        res.send(person);
     })
 };

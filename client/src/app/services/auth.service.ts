@@ -18,7 +18,7 @@ export class AuthService {
 
   login(username: string , password: string):Observable<boolean>{
     
-    return this.http.post<{token: string}>('/api/auth',{username: username,password: password})
+    return this.http.post<{token: string}>('/api/admin/auth',{username: username,password: password})
     .pipe(
       map(result =>{
       localStorage.setItem('access_token',result.token);
