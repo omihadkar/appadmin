@@ -22,9 +22,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         private router: Router,
     ) {
-        this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
-            this.currentUser = user;
-        });
+        // this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+        //     this.currentUser = user;
+        // });
     }
 
     ngOnInit() {

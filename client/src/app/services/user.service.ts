@@ -17,16 +17,16 @@ getById(id: number) {
     return this.http.get('/api/users/${id}');
 }
 
-register(user: User) {
-    return this.http.post('/api/users/register', user);
+// register(user: User) {
+//     //return this.http.post('/api/users/register', user);
 
-    return this.http.post<{token: string}>('/api/admin/register',{username: username,password: password, firstName: firstName, lastName:lastName})
-    .pipe(
-      map(result =>{
-      //localStorage.setItem('access_token',result.token);
-      return true;
-    }))
-}
+//     return this.http.post<{token: string}>('/api/admin/register',{username: username,password: password, firstName: firstName, lastName:lastName})
+//     .pipe(
+//       map(result =>{
+//       //localStorage.setItem('access_token',result.token);
+//       return true;
+//     }))
+// }
 
 update(user: User) {
     return this.http.put('/api/users/${user.id}', user);

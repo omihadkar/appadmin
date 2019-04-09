@@ -8,12 +8,12 @@ import { User } from '../entities/User';
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+   private currentUserSubject: BehaviorSubject<User>;
+  // public currentUser: Observable<User>;
   
   constructor(private http: HttpClient) { 
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
+    // this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    // this.currentUser = this.currentUserSubject.asObservable();
   }
 
   login(username: string , password: string):Observable<boolean>{
@@ -27,8 +27,20 @@ export class AuthService {
   }
 
   public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+    return this.currentUserSubject.value;    
 }
+
+  register(username: string, password: string, firstNmae: string, lastName: string):Observable<boolean>
+  {
+    return this.http.post<{token: string}>('/admin/register',{username: username,password: password,firstName:firstNmae,
+    lastName:lastName})
+    .pipe(
+      map(result =>{
+        console.log(result);
+      // localStorage.setItem('access_token',result.token);
+      return true;
+    }))
+  }
 
   logout()
   {

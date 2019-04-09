@@ -6,6 +6,7 @@ exports.test = function (req, res) {
 };
 
 exports.admin_create = function (req, res) {
+    console.log('Creation started');
     let person = new Person(
         {
             username: req.body.username,
@@ -30,7 +31,8 @@ exports.admin_auth = function (req, res) {
     Person.findOne({username: req.body.username,password:req.body.password},function (err, person) 
     {
         if (err) {console.log(err);  return next(err);}
+        var token = jwt.sign({userID: req.body.username}, 'super-shared-secret', {expiresIn: '2h'});
         console.log(person);
-        res.send(person);
+        res.send({token});
     })
 };

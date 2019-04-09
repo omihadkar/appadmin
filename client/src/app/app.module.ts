@@ -10,6 +10,12 @@ import { HomeComponent } from './homepage/homepage.component'
 import {AppComponent} from './app.component'
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {JwtModule} from '@auth0/angular-jwt';
+
+export function  tokenGetter()
+{
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -23,7 +29,13 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     BrowserModule,
     routing,
     NgbModule, FormsModule,ReactiveFormsModule,
-    HttpModule,HttpClientModule
+    HttpModule,HttpClientModule,
+    JwtModule.forRoot({
+      config:{ 
+      tokenGetter: tokenGetter,
+      whitelistedDomains: [],
+      blacklistedRoutes: []}
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
